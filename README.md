@@ -10,6 +10,16 @@ Hexagonal / ports-and-adapters. The domain layer is pure, no IO, no third-party
 deps; adapters live behind abstract interfaces and are wired by a composition
 root according to a profile (`dev` or `pi`).
 
+See [`docs/architecture.md`](docs/architecture.md) for source diagrams.
+
+![Hexagonal layout](docs/diagrams/hexagonal.svg)
+
+![Runtime: three concurrent loops](docs/diagrams/runtime-loops.svg)
+
+![Alarm state machine](docs/diagrams/state-machine.svg)
+
+Diagram sources live in `docs/diagrams/*.mmd`; re-render with `./scripts/render-diagrams.sh`.
+
 ```
 domain/      pure state machine + detector
 ports/       abstract interfaces (Clock, CsiSource, Notifier, Siren, Store)
@@ -181,3 +191,9 @@ your phone is the final filter.
   Telegram covers the same use case in five minutes of setup.
 - Phase information is not currently used; only amplitude variance. Adding
   phase-aware features is a natural next step for activity classification.
+
+## References
+
+- ScienceDaily — <https://www.sciencedaily.com/releases/2026/05/260522023127.htm>
+- KIT research record — <https://publikationen.bibliothek.kit.edu/1000185756>
+- Paper PDF — [`docs/3719027.3765062-1.pdf`](docs/3719027.3765062-1.pdf)

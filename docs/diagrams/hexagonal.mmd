@@ -1,0 +1,43 @@
+flowchart LR
+    subgraph Domain["domain/ (pure)"]
+        SM[StateMachine]
+        VD[VarianceDetector]
+        EV[events]
+    end
+
+    subgraph Ports["ports/"]
+        PClock[Clock]
+        PCsi[CsiSource]
+        PNotif[Notifier]
+        PSiren[Siren]
+        PStore[Store]
+    end
+
+    subgraph Adapters["adapters/"]
+        direction TB
+        ACsi["csi/<br/>synthetic · nexmon"]
+        ANotif["notifier/<br/>console · telegram · email · composite"]
+        ASiren["siren/<br/>mock · gpio"]
+        AClock["clock/<br/>system · fake"]
+        AStore["store/<br/>memory · sqlite"]
+    end
+
+    subgraph App["app/"]
+        Comp[composition.compose]
+        Run[runtime.run]
+        Cfg[config.AlarmConfig]
+    end
+
+    SM --> EV
+    VD --> EV
+
+    ACsi -.implements.-> PCsi
+    ANotif -.implements.-> PNotif
+    ASiren -.implements.-> PSiren
+    AClock -.implements.-> PClock
+    AStore -.implements.-> PStore
+
+    Cfg --> Comp
+    Comp --> Adapters
+    Comp --> Domain
+    Run --> Comp

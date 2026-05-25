@@ -14,6 +14,7 @@ Build / test / lint use the Makefile. Both local-venv and container variants exi
 - `make type` — `mypy --strict` (configured for `src`)
 - `make run` — runs locally with `WIFI_ALARM_PROFILE=dev`
 - `make docker-build` / `make docker-test` / `make docker-run` — same flows inside the container (no Pi hardware needed)
+- `./start.sh` — convenience wrapper: `docker compose build` then `docker compose up` (foreground)
 - `make install` — `pip install -e ".[dev]"`. Pi deployment uses `pip install ".[pi]"` for `aiosqlite`, `gpiozero`, `lgpio`.
 
 Python 3.11+. `pytest-asyncio` is in `auto` mode — do not decorate async tests.
@@ -61,3 +62,9 @@ TRIGGERED ── /disarm ──▶ DISARMED     (siren off)
 ## Hardware notes (Pi)
 
 Nexmon CSI on BCM43455c0 broadcasts CSI frames to UDP 5500 by default; `adapters/csi/nexmon.py` consumes that. The siren adapter assumes a **low-trigger** relay by default (`SIREN_ACTIVE_HIGH=false`); flip for high-trigger modules.
+
+## References
+
+- ScienceDaily background reading: <https://www.sciencedaily.com/releases/2026/05/260522023127.htm>
+- KIT research record: <https://publikationen.bibliothek.kit.edu/1000185756>
+- Paper PDF (local): `docs/3719027.3765062-1.pdf`

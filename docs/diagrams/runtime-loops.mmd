@@ -1,0 +1,22 @@
+flowchart TD
+    CSI[CsiSource]
+    DET[VarianceDetector]
+    SM[StateMachine]
+    NOTIF[Notifier]
+    SIREN[Siren]
+    STORE[Store]
+    CLK[Clock]
+
+    CSI -- CsiFrame --> CAP{{capture_loop}}
+    CAP --> DET
+    DET -- MotionEvent --> SM
+
+    NOTIF -- UserReply / UserCommand --> INB{{inbound_loop}}
+    INB --> SM
+
+    CLK --> TICK{{tick_loop · 1Hz}}
+    TICK --> SM
+
+    SM -- NotifyOwner --> NOTIF
+    SM -- SirenOn / SirenOff --> SIREN
+    SM -- LogEvent --> STORE

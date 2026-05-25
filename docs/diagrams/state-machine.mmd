@@ -1,0 +1,12 @@
+stateDiagram-v2
+    [*] --> DISARMED
+    DISARMED --> ARMED: /arm
+    ARMED --> ALERTING: motion
+    ALERTING --> ARMED: dismiss
+    ALERTING --> TRIGGERED: confirm
+    ALERTING --> TRIGGERED: timeout (REPLY_TIMEOUT_S)
+    TRIGGERED --> DISARMED: /disarm
+    ARMED --> TRIGGERED: /panic
+    ALERTING --> TRIGGERED: /panic
+    DISARMED --> TRIGGERED: /panic
+    ARMED --> DISARMED: /snooze N
