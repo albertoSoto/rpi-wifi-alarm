@@ -1,0 +1,49 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "wifi-alarm"
+version = "0.1.0"
+description = "CSI-based presence/activity sensing with alarm escalation."
+requires-python = ">=3.11"
+dependencies = [
+    # Core runtime deps only — adapters that need extras import lazily.
+    "httpx>=0.27",        # telegram
+    "aiosmtplib>=3.0",    # email
+]
+
+[project.optional-dependencies]
+pi = [
+    "aiosqlite>=0.20",
+    "gpiozero>=2.0",
+    "lgpio>=0.2.2.0; platform_machine == 'aarch64' or platform_machine == 'armv7l'",
+]
+dev = [
+    "pytest>=8.0",
+    "pytest-asyncio>=0.23",
+    "ruff>=0.6",
+    "mypy>=1.10",
+]
+
+[project.scripts]
+wifi-alarm = "wifi_alarm.app.main:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "UP", "B", "SIM", "ASYNC"]
+
+[tool.mypy]
+python_version = "3.11"
+strict = true
+files = ["src"]
+
+[[tool.mypy.overrides]]
+module = ["gpiozero.*", "aiosqlite.*", "aiosmtplib.*"]
+ignore_missing_imports = true

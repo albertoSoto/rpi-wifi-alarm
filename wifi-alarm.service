@@ -1,0 +1,26 @@
+[Unit]
+Description=WiFi CSI presence alarm
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=wifi-alarm
+Group=gpio
+EnvironmentFile=/etc/wifi-alarm/wifi-alarm.env
+ExecStart=/usr/local/bin/wifi-alarm
+Restart=on-failure
+RestartSec=5
+
+# Allow the service to bind UDP 5500 for nexmon CSI without root.
+AmbientCapabilities=CAP_NET_BIND_SERVICE
+
+# Hardening
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/var/lib/wifi-alarm
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target

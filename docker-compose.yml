@@ -1,0 +1,32 @@
+# Dev compose: runs the synthetic-CSI dev profile.
+# Telegram/email creds optional — set them in .env to test real notifiers
+# against the dev pipeline.
+
+services:
+  wifi-alarm:
+    build: .
+    image: wifi-alarm:dev
+    container_name: wifi-alarm-dev
+    environment:
+      WIFI_ALARM_PROFILE: dev
+      REPLY_TIMEOUT_S: "60"
+      DETECTOR_WINDOW: "100"
+      DETECTOR_CAL_FRAMES: "1000"
+      DETECTOR_THRESHOLD_MULT: "4.0"
+      # Uncomment + set in .env for real notifications during dev:
+      # TELEGRAM_BOT_TOKEN: "${TELEGRAM_BOT_TOKEN}"
+      # TELEGRAM_CHAT_ID: "${TELEGRAM_CHAT_ID}"
+      # SMTP_HOST: "${SMTP_HOST}"
+      # SMTP_PORT: "${SMTP_PORT}"
+      # SMTP_USER: "${SMTP_USER}"
+      # SMTP_PASS: "${SMTP_PASS}"
+      # EMAIL_FROM: "${EMAIL_FROM}"
+      # EMAIL_TO: "${EMAIL_TO}"
+    restart: unless-stopped
+
+  test:
+    build: .
+    image: wifi-alarm:dev
+    container_name: wifi-alarm-test
+    command: ["python", "-m", "pytest", "-v"]
+    profiles: ["test"]
