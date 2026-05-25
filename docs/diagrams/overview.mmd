@@ -1,0 +1,6 @@
+flowchart LR
+    WiFi([WiFi CSI]) --> Pi[Raspberry Pi]
+    Pi --> Detector{motion?}
+    Detector -- yes --> Telegram[Telegram alert]
+    Telegram -- confirm / timeout --> Siren([Siren])
+    Telegram -- dismiss --> Pi

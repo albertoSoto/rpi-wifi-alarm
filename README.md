@@ -10,14 +10,10 @@ Hexagonal / ports-and-adapters. The domain layer is pure, no IO, no third-party
 deps; adapters live behind abstract interfaces and are wired by a composition
 root according to a profile (`dev` or `pi`).
 
-See [`docs/architecture.md`](docs/architecture.md) for source diagrams.
+<img src="docs/diagrams/overview.svg" alt="High-level flow" width="720">
 
-![Hexagonal layout](docs/diagrams/hexagonal.svg)
-
-![Runtime: three concurrent loops](docs/diagrams/runtime-loops.svg)
-
-![Alarm state machine](docs/diagrams/state-machine.svg)
-
+See [`docs/architecture.md`](docs/architecture.md) for detailed diagrams of the
+hexagonal layout, the three concurrent runtime loops, and the state machine.
 Diagram sources live in `docs/diagrams/*.mmd`; re-render with `./scripts/render-diagrams.sh`.
 
 ```
